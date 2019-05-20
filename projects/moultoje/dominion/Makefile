@@ -27,15 +27,21 @@ interface.o: interface.h interface.c
 randomtestadventurer: randomtestadventurer.c dominion.o rngs.o
 	gcc -o randomtestadventurer -g randomtestadventurer.c dominion.o rngs.o $(CFLAGS)
 
+randomtestcard1: randomtestcard1.c dominion.o rngs.o
+	gcc -o randomtestcard1 -g randomtestcard1.c dominion.o rngs.o $(CFLAGS)
+
 runtests: testDrawCard 
 	./testDrawCard &> unittestresult.out
 	gcov dominion.c >> unittestresult.out
 	cat dominion.c.gcov >> unittestresult.out
 
-randomtestresults: randomtestadventurer
+randomtestresults: randomtestadventurer randomtestcard1
 	echo -e "RANDOM TESTS\n" > randomtestresults.out
 	echo -e "Random Test -- Adventurer\n" >> randomtestresults.out
-	./randomtestadventurer &>> randomtestresults.out
+	time ./randomtestadventurer &>> randomtestresults.out
+	gcov dominion.c >> randomtestresults.out
+	echo -e "\nRandom Test -- Smithy\n" >> randomtestresults.out
+	time ./randomtestcard1 &>> randomtestresults.out
 	gcov dominion.c >> randomtestresults.out
 
 player: player.c interface.o
@@ -44,4 +50,4 @@ player: player.c interface.o
 all: playdom player 
 
 clean:
-	rm -f *.o playdom.exe playdom player player.exe  *.gcov *.gcda *.gcno *.so *.out testDrawCard testDrawCard.exe
+	rm -f *.o playdom.exe playdom player player.exe  *.gcov *.gcda *.gcno *.so *.out testDrawCard testDrawCard.exe randomtestadventurer.o randomtestcard1.o

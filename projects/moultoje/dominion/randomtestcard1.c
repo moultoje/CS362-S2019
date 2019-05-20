@@ -1,5 +1,5 @@
 /*******************************************************************************
-** Program: randomtestadventurer.c
+** Program: randomtestcard1.c
 ** Author: Jeffrey Moulton (moultoje@oregonstate.edu)
 ** Course: CS362 - Software Engineering II
 ** Date Modified: 5/19/2019
@@ -14,11 +14,12 @@
 
 int main()
 {
-    // Initialize variables used in the randomtestadventurer function.
+    // Initialize variables used in the randomtestcard1 function.
     int i, j, k;
     int numPlayers;
     int curPlayer;
     int cards[10]; // Cards used in the game
+    int handPos; // Position of the smithy card in the hand
     int randomInt; // Random integer
     struct gameState preState; // State of the game before calling function
     struct gameState postState; // State of the game after calling function
@@ -30,7 +31,7 @@ int main()
     srand(time(NULL));
 
     // Inform the user which test is being run.
-    printf("The Adventurer card is being tested.\n");
+    printf("The Smithy card is being tested.\n");
     printf("%d tests will be run against the card.\n\n", numTests);
 
     // Start loop for testing.
@@ -44,10 +45,9 @@ int main()
         numPlayers = rand() % (4 - 2 + 1) + 2;
         curPlayer = rand() % numPlayers;
 
-        // Randomize the cards, force adventurer and gold to be in the array.
-        cards[0] = adventurer;
-        cards[1] = gold;
-        j = 2;
+        // Randomize the cards, force smithy to be in the array.
+        cards[0] = smithy;
+        j = 1;
         while (j < 10)
         {
             // Get random integer in card value range
@@ -74,8 +74,9 @@ int main()
         initializeGame(numPlayers, cards, rand(), &preState);
 
         // Randomize the features of adventurer: player's decks and discard 
-        // piles. Draw the current player's hand. Tell the state whose turn it 
-        // is.
+        // piles. Draw the current player's hand, force the smithy card to be
+        // at the handPos position in the player's hand. Tell the state whose
+        // turn it is.
         for (j = 0; j < numPlayers; ++j) // Randomize decks.
         {
             // Get random deck size.
@@ -98,17 +99,27 @@ int main()
                 preState.discard[j][k] = cards[rand() % 10];
             }
         }
+        handPos = rand() % 5; // Get a random hand position
         for (j = 0; j < 5; ++j) // Draw deck for current player.
         {
-            drawCard(curPlayer, &preState);
+            if (j == handPos) // At the position for the smithy card
+            {
+                // Add smithy to the hand.
+                preState.hand[curPlayer][handPos] = smithy;
+            }
+            else
+            {
+                // Draw from the deck.
+                drawCard(curPlayer, &preState);
+            }
         }
         preState.whoseTurn = curPlayer;
 
         // Copy the preState to the postState.
         memcpy(&postState, &preState, sizeof(struct gameState));
 
-        // Call the adventurer effect function.
-        adventurerEffect(&postState, curPlayer);
+        // Call the smithy effect function.
+        smithyEffect(&postState, curPlayer, handPos);
 
         // Check that the current player's hand increased by two.
         if (postState.handCount[curPlayer] != 
@@ -121,23 +132,29 @@ int main()
             failFlag = 1;
         }
 
-        // Check that the current player's deck decreased by the same amount
-        // that the discard pile increased by minus 2.
-        if ((preState.deckCount[curPlayer] - postState.deckCount[curPlayer]) !=
-            (postState.discardCount[curPlayer] - preState.discardCount[curPlayer] + 2))
+        // Check that the current player's deck decreased by three.
+        if (postState.deckCount[curPlayer] != preState.deckCount[curPlayer] - 3)
         {
-            printf("Test %d FAILURE: Current player's deck and discard pile did"
-                " not check quantities similarly! Change in deck count: %d, "
-                "expected change in discount count: %d, actual change in "
-                "discount count: %d.\n", i,
-                preState.deckCount[curPlayer] - postState.deckCount[curPlayer],
-                preState.deckCount[curPlayer] - postState.deckCount[curPlayer] - 2,
-                postState.discardCount[curPlayer] - preState.discardCount[curPlayer]);
+            printf("Test %d FAILURE: Current player's deck did not decrease by "
+                "three! Expected value: %d, actual value: %d.\n", i,
+                preState.deckCount[curPlayer] - 3,
+                postState.deckCount[curPlayer]);
             failFlag = 1;
         }
 
-        // Check that the other player's decks and discard piles did not change
-        // size.
+        // Check that the current player's played card pile increased by one.
+        if (postState.playedCardCount[curPlayer] 
+            != preState.playedCardCount[curPlayer] + 1)
+        {
+            printf("Test %d FAILURE: Current player's playerd card pile did not"
+                " increase by one! Expected value: %d, actual value: %d.\n", i,
+                preState.playedCardCount[curPlayer] + 1,
+                postState.playedCardCount[curPlayer]);
+            failFlag = 1;
+        }
+
+        // Check that the other player's decks and played card piles did not
+        // change size.
         for (j = 0; j < numPlayers; ++j)
         {
             if (j != curPlayer)
@@ -148,10 +165,10 @@ int main()
                         i, j);
                     failFlag = 1;
                 }
-                if (postState.discardCount[j] != preState.discardCount[j])
+                if (postState.playedCardCount[j] != preState.playedCardCount[j])
                 {
-                    printf("Test %d, FAILURE: Player %d's discard pile changed "
-                        "sizes.\n", i, j);
+                    printf("Test %d, FAILURE: Player %d's played card count "
+                        "changed values.\n", i, j);
                     failFlag = 1;
                 }
             }
@@ -166,7 +183,7 @@ int main()
 
     // Print out how many failures there were in the total amount of tests.
     printf("\n%d tests failed out of %d tests. A test is marked as failed if "
-        "any check in the test was not valid.\n\n", numFails, numTests);
+        "any check in the test was not valid.\n\n");
 
     return 0;
 }
