@@ -3,7 +3,8 @@
 ** Author: Jeffrey Moulton (moultoje@oregonstate.edu)
 ** Course: CS362 - Software Engineering II
 ** Date Modified: 5/19/2019
-** Description: 
+** Description: Random testing program for the Adventurer card effect function
+**              in dominion.c.
 *******************************************************************************/
 
 #include "dominion.h"
@@ -123,7 +124,7 @@ int main()
         }
 
         // Check that the current player's deck decreased by the same amount
-        // that the discard pile increased by minus 2.
+        // that the discard pile increased by plus 2.
         if ((preState.deckCount[curPlayer] - postState.deckCount[curPlayer]) !=
             (postState.discardCount[curPlayer] - preState.discardCount[curPlayer] + 2))
         {

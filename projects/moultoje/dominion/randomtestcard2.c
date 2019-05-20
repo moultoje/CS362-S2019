@@ -3,7 +3,8 @@
 ** Author: Jeffrey Moulton (moultoje@oregonstate.edu)
 ** Course: CS362 - Software Engineering II
 ** Date Modified: 5/19/2019
-** Description: 
+** Description: Random testing program for the Baron card effect function in 
+**              dominion.c.
 *******************************************************************************/
 
 #include "dominion.h"
