@@ -143,13 +143,12 @@ int main()
         }
 
         // Check that the current player's played card pile increased by one.
-        if (postState.playedCardCount[curPlayer] 
-            != preState.playedCardCount[curPlayer] + 1)
+        if (postState.playedCardCount != preState.playedCardCount + 1)
         {
-            printf("Test %d FAILURE: Current player's playerd card pile did not"
-                " increase by one! Expected value: %d, actual value: %d.\n", i,
-                preState.playedCardCount[curPlayer] + 1,
-                postState.playedCardCount[curPlayer]);
+            printf("Test %d FAILURE: The played card pile did not increase by "
+                "one! Expected value: %d, actual value: %d.\n", i,
+                preState.playedCardCount + 1,
+                postState.playedCardCount);
             failFlag = 1;
         }
 
@@ -163,12 +162,6 @@ int main()
                 {
                     printf("Test %d FAILURE: Player %d's deck changed sizes.\n",
                         i, j);
-                    failFlag = 1;
-                }
-                if (postState.playedCardCount[j] != preState.playedCardCount[j])
-                {
-                    printf("Test %d, FAILURE: Player %d's played card count "
-                        "changed values.\n", i, j);
                     failFlag = 1;
                 }
             }
