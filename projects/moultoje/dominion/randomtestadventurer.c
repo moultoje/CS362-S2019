@@ -105,6 +105,48 @@ int main()
         // Call the adventurer effect function.
         adventurerEffect(&postState, curPlayer);
 
+        // Check that the current player's hand increased by two.
+        if (postState.handCount(curPlayer) != 
+            (preState.handCount(curPlayer) + 2))
+        {
+            printf("Test %d FAILURE: Current player's hand did not increase by "
+                "two! Expected value: %d, Actual Value: %d.\n", i, 
+                preState.handCount(curPlayer) + 2, 
+                postState.handCount(curPlayer));
+        }
+
+        // Check that the current player's deck decreased by the same amount
+        // that the discard pile increased by minus 2.
+        if ((preState.deckCount(curPlayer) - postState.deckCount(curPlayer)) !=
+            (postState.discardCount(curPlayer) - preState.discardCount(curPlayer) + 2))
+        {
+            printf("Test %d FAILURE: Current player's deck and discard pile did"
+                " not check quantities similarly! Change in deck count: %d, "
+                "Expected change in discount count: %d, Actual change in "
+                "discount count: %d.\n", i,
+                preState.deckCount(curPlayer) - postState.deckCount(curPlayer),
+                preState.deckCount(curPlayer) - postState.deckCount(curPlayer) - 2,
+                postState.discardCount(curPlayer) - preState.discardCount(curPlayer));
+        }
+
+        // Check that the other player's decks and discard piles did not change
+        // size.
+        for (j = 0; j < numPlayers; ++j)
+        {
+            if (j != curPlayer)
+            {
+                if (postState.deckCount(j) != preState.deckCount(j))
+                {
+                    printf("Test %d FAILURE: Player %d's deck changed sizes.\n",
+                        i, j);
+                }
+                if (postState.discardCount(j) != preState.discardCount(j))
+                {
+                    printf("Test %d, FAILURE: Player %d's discard pile changed "
+                        "sizes.\n", i, j);
+                }
+            }
+        }
     }
 
     return 0;
