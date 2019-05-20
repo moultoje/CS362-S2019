@@ -24,11 +24,19 @@ testAll: dominion.o testSuite.c
 interface.o: interface.h interface.c
 	gcc -c interface.c -g  $(CFLAGS)
 
+randomtestadventurer: randomtestadventurer.c dominion.o rngs.o
+	gcc -o randomtestadventurer -g randomtestadventurer.c dominion.o rngs.o $(CFLAGS)
+
 runtests: testDrawCard 
 	./testDrawCard &> unittestresult.out
 	gcov dominion.c >> unittestresult.out
 	cat dominion.c.gcov >> unittestresult.out
 
+randomtestresults: randomtestadventurer
+	echo -e "RANDOM TESTS\n" > randomtestresults.out
+	echo -e "Random Test -- Adventurer\n" >> randomtestresults.out
+	./randomtestadventurer &>> randomtestresults.out
+	gcov dominion.c >> randomtestresults.out
 
 player: player.c interface.o
 	gcc -o player player.c -g  dominion.o rngs.o interface.o $(CFLAGS)
