@@ -107,6 +107,7 @@ int main()
             {
                 // Add smithy to the hand.
                 preState.hand[curPlayer][handPos] = smithy;
+                ++preState.handCount[curPlayer];
             }
             else
             {

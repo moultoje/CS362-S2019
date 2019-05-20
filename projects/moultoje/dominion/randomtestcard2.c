@@ -149,6 +149,18 @@ int main()
                 failFlag = 1;
             }
 
+            // Check that the number of buys increased by one
+            if (postState.numBuys != preState.numBuys + 1)
+            {
+                if (!testDescription)
+                {
+                    printf("Test %d: Player chose to discard estate and had an "
+                        "estate in hand.\n", i);
+                    testDescription = 1;
+                }
+                printf("Test %d FAILURE: Number of buys didn't increase!\n");
+            }
+
             // Check if the player gained 4 coins.
             if (postState.coins != preState.coins + 4)
             {
@@ -203,8 +215,19 @@ int main()
                 printf("Test %d: Player gains estate card.\n", i);
                 testDescription = 1;
                 printf("Test %d FAILURE: Current player's hand changed "
-                    "size!\n");
+                    "size!\n", i);
                 failFlag = 1;
+            }
+
+            // Check that the number of buys increased by one
+            if (postState.numBuys != preState.numBuys + 1)
+            {
+                if (!testDescription)
+                {
+                    printf("Test %d: Player gains estate card.\n", i);
+                    testDescription = 1;
+                }
+                printf("Test %d FAILURE: Number of buys didn't increase!\n");
             }
 
             // Check if the player gained any coins.
@@ -215,7 +238,7 @@ int main()
                     printf("Test %d: Player gains estate card.\n", i);
                     testDescription = 1;
                 }
-                printf("Test: %d FAILURE: Number of coins changed!\n", i);
+                printf("Test %d FAILURE: Number of coins changed!\n", i);
                 failFlag = 1;
             }
 
