@@ -38,7 +38,7 @@ runtests: testDrawCard
 	gcov dominion.c >> unittestresult.out
 	cat dominion.c.gcov >> unittestresult.out
 
-randomtestresults: randomtestadventurer randomtestcard1
+randomtestresults: randomtestadventurer randomtestcard1 randomtestcard2
 	echo -e "RANDOM TESTS\n" > randomtestresults.out
 	echo -e "Random Test -- Adventurer\n" >> randomtestresults.out
 	time ./randomtestadventurer &>> randomtestresults.out
@@ -56,4 +56,4 @@ player: player.c interface.o
 all: playdom player 
 
 clean:
-	rm -f *.o playdom.exe playdom player player.exe  *.gcov *.gcda *.gcno *.so *.out testDrawCard testDrawCard.exe randomtestadventurer randomtestcard1
+	rm -f *.o playdom.exe playdom player player.exe  *.gcov *.gcda *.gcno *.so *.out testDrawCard testDrawCard.exe randomtestadventurer randomtestcard1 randomtestcard2
