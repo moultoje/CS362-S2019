@@ -30,6 +30,9 @@ randomtestadventurer: randomtestadventurer.c dominion.o rngs.o
 randomtestcard1: randomtestcard1.c dominion.o rngs.o
 	gcc -o randomtestcard1 -g randomtestcard1.c dominion.o rngs.o $(CFLAGS)
 
+randomtestcard2: randomtestcard2.c dominion.o rngs.o
+	gcc -o randomtestcard2 -g randomtestcard2.c dominion.o rngs.o $(CFLAGS)
+
 runtests: testDrawCard 
 	./testDrawCard &> unittestresult.out
 	gcov dominion.c >> unittestresult.out
@@ -42,6 +45,9 @@ randomtestresults: randomtestadventurer randomtestcard1
 	gcov dominion.c >> randomtestresults.out
 	echo -e "\nRandom Test -- Smithy\n" >> randomtestresults.out
 	time ./randomtestcard1 &>> randomtestresults.out
+	gcov dominion.c >> randomtestresults.out
+	echo -e "\nRandom Test -- Baron\n" >> randomtestresults.out
+	time ./randomtestcard2 &>> randomtestresults.out
 	gcov dominion.c >> randomtestresults.out
 
 player: player.c interface.o

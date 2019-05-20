@@ -73,7 +73,7 @@ int main()
         // Initialize the game
         initializeGame(numPlayers, cards, rand(), &preState);
 
-        // Randomize the features of adventurer: player's decks and discard 
+        // Randomize the features of smithy: player's decks and discard 
         // piles. Draw the current player's hand, force the smithy card to be
         // at the handPos position in the player's hand. Tell the state whose
         // turn it is.
@@ -100,6 +100,7 @@ int main()
             }
         }
         handPos = rand() % 5; // Get a random hand position
+        preState.handCount[curPlayer] = 0; // Set the hand count to zero.
         for (j = 0; j < 5; ++j) // Draw deck for current player.
         {
             if (j == handPos) // At the position for the smithy card
@@ -152,8 +153,7 @@ int main()
             failFlag = 1;
         }
 
-        // Check that the other player's decks and played card piles did not
-        // change size.
+        // Check that the other player's decks did not change size.
         for (j = 0; j < numPlayers; ++j)
         {
             if (j != curPlayer)
@@ -176,7 +176,7 @@ int main()
 
     // Print out how many failures there were in the total amount of tests.
     printf("\n%d tests failed out of %d tests. A test is marked as failed if "
-        "any check in the test was not valid.\n\n");
+        "any check in the test was not valid.\n\n", numFails, numTests);
 
     return 0;
 }

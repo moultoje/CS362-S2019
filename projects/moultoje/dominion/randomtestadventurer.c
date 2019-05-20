@@ -98,6 +98,7 @@ int main()
                 preState.discard[j][k] = cards[rand() % 10];
             }
         }
+        preState.handCount[curPlayer] = 0; // Set the hand count to zero.
         for (j = 0; j < 5; ++j) // Draw deck for current player.
         {
             drawCard(curPlayer, &preState);
