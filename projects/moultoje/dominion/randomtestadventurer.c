@@ -2,11 +2,11 @@
 ** Program: randomtestadventurer.c
 ** Author: Jeffrey Moulton (moultoje@oregonstate.edu)
 ** Course: CS362 - Software Engineering II
-** Date Modified: 5/12/2019
+** Date Modified: 5/19/2019
 ** Description: 
 *******************************************************************************/
 
-#include "testHelpers.h"
+//#include "testHelpers.h"
 #include "dominion.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -52,7 +52,7 @@ int main()
             // Check that the card already isn't in the array.
             for (k = 0; k < j; ++k)
             {
-                if (cards[k] = randomInt)
+                if (cards[k] == randomInt)
                 {
                     randomInt = -1;
                 }
