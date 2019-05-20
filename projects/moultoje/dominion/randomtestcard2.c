@@ -158,7 +158,7 @@ int main()
                         "estate in hand.\n", i);
                     testDescription = 1;
                 }
-                printf("Test %d FAILURE: Number of buys didn't increase!\n");
+                printf("Test %d FAILURE: Number of buys didn't increase!\n", i);
             }
 
             // Check if the player gained 4 coins.
@@ -227,7 +227,7 @@ int main()
                     printf("Test %d: Player gains estate card.\n", i);
                     testDescription = 1;
                 }
-                printf("Test %d FAILURE: Number of buys didn't increase!\n");
+                printf("Test %d FAILURE: Number of buys didn't increase!\n", i);
             }
 
             // Check if the player gained any coins.

@@ -49,6 +49,10 @@ randomtestresults: randomtestadventurer randomtestcard1 randomtestcard2
 	echo -e "\nRandom Test -- Baron\n" >> randomtestresults.out
 	time ./randomtestcard2 &>> randomtestresults.out
 	gcov dominion.c >> randomtestresults.out
+	echo -e "\nDetailed gcove coverage results\n" >> randomtestresults.out
+	gcov dominion.c -fb >> randomtestresults.out
+	echo -e "\ngcov data for dominion.c\n" >> randomtestresults.out
+	cat dominion.c.gcov >> randomtestresults.out
 
 player: player.c interface.o
 	gcc -o player player.c -g  dominion.o rngs.o interface.o $(CFLAGS)
