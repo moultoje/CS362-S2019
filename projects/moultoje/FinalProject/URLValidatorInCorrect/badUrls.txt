@@ -1,0 +1,6 @@
+http://www.google.com
+abchttp://www.google.com
+http://www.google.com11111
+com.http://www.google.com
+ftp:1111
+http://www.google.com?11111111
