@@ -68,7 +68,7 @@ runtests: testDrawCard
 	gcov dominion.c >> unittestresult.out
 	cat dominion.c.gcov >> unittestresult.out
 
-unittestresult: unittest1 unittest2 unittest3 unittest4 cardtest1 cardtest2 cardtest3 cardtest4
+runtesting: unittest1 unittest2 unittest3 unittest4 cardtest1 cardtest2 cardtest3 cardtest4 randomtestadventurer randomtestcard1 randomtestcard2
 	echo -e "UNIT TESTS\n" > unittestresult.out
 	echo -e "Unittest1\n" >> unittestresult.out
 	./unittest1 &>> unittestresult.out
@@ -99,8 +99,6 @@ unittestresult: unittest1 unittest2 unittest3 unittest4 cardtest1 cardtest2 card
 	gcov dominion.c -fb >> unittestresult.out
 	echo -e "\ngcov data for dominion.c\n" >> unittestresult.out
 	cat dominion.c.gcov >> unittestresult.out
-
-randomtestresults: randomtestadventurer randomtestcard1 randomtestcard2
 	echo -e "RANDOM TESTS\n" > randomtestresults.out
 	echo -e "Random Test -- Adventurer\n" >> randomtestresults.out
 	time ./randomtestadventurer &>> randomtestresults.out
@@ -116,14 +114,10 @@ randomtestresults: randomtestadventurer randomtestcard1 randomtestcard2
 	echo -e "\ngcov data for dominion.c\n" >> randomtestresults.out
 	cat dominion.c.gcov >> randomtestresults.out
 
-runtesting: unittestresult randomtestresults
-	unittestresult
-	randomtestresults
-
 player: player.c interface.o
 	gcc -o player player.c -g  dominion.o rngs.o interface.o $(CFLAGS)
 
 all: playdom player 
 
 clean:
-	rm -f *.o playdom.exe playdom player player.exe  *.gcov *.gcda *.gcno *.so *.out testDrawCard testDrawCard.exe
+	rm -f *.o playdom.exe playdom player player.exe  *.gcov *.gcda *.gcno *.so testDrawCard testDrawCard.exe unittest1 unittest2 unittest3 unittest4 cardtest1 cardtest2 cardtest3 cardtest4 randomtestadventurer randomtestcard1 randomtestcard2
