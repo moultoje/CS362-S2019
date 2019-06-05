@@ -84,5 +84,29 @@ public class TeamUnitTest extends TestCase {
 		}
 
 	}
+	
+	//Test a null URL
+	public void testNull() throws IOException {
+		//set up the validator
+		try {
+			UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
+			String url = null;
+			
+			boolean result = urlVal.isValid(url);
+			
+			try {
+				assertEquals(url, false, result);
+			}
+			catch(Exception e)
+			{
+				System.out.println(e.toString());
+			}
+			System.out.println("Null passed to isValid and false returned successful");
+		}
+		catch(Exception e)
+		{
+			System.out.println(e.toString());
+		}
+	}
 
 }
