@@ -109,4 +109,49 @@ public class TeamUnitTest extends TestCase {
 		}
 	}
 
+	//Testing fragments in URLs
+	public void testFragment() throws IOException {
+		//URL without frags
+		try {
+			UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.NO_FRAGMENTS);
+			String urlWithoutFrags = "http://www.amazon.com";
+			
+			boolean result = urlVal.isValid(urlWithoutFrags);
+			
+			try {
+				assertEquals(urlWithoutFrags, true, result);
+			}
+			catch(Exception e)
+			{
+				System.out.println(e.toString());
+			}
+			System.out.println("URL without frags passed. Test successful");
+		}
+		catch(Exception e)
+		{
+			System.out.println(e.toString());
+		}
+		
+		//URL with frags
+		try {
+			UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.NO_FRAGMENTS);
+			String urlWithFrags = "http://wwww.amazon.com/#Frag";
+			
+			boolean result = urlVal.isValid(urlWithFrags);
+			
+			try {
+				assertEquals(urlWithFrags, false, result);
+			}
+			catch(Exception e)
+			{
+				System.out.println(e.toString());
+			}
+			System.out.println("URL with frags passed and failed return. Test successful");
+		}
+		catch(Exception e)
+		{
+			System.out.println(e.toString());
+		}
+	}
+
 }
